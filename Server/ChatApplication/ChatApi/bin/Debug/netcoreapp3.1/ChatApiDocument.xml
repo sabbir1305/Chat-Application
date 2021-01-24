@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ChatApi</name>
+    </assembly>
+    <members>
+        <member name="P:ChatApi.Entities.Message.IsDeleted">
+            <summary>
+            IsDeleted = true
+            </summary>
+        </member>
+    </members>
+</doc>

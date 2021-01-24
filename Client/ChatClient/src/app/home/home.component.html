@@ -1,0 +1,106 @@
+
+  <div class="container mt-4">
+      <!-- <h1>Hi {{user.firstName}}!</h1> -->
+      <!-- <p>Log in successfull , browse user for chating.</p>
+      <p><a routerLink="/users">Users</a></p> -->
+
+      <div class="row">
+        <div class="col-3">
+          <!-- <input class="form-control input-sm" placeholder="Search...." (change)="filterUser($event)"> -->
+
+          <ul class="list-group" style="overflow-y: scroll !important; height:400px !important;">
+            <li class="list-group-item" *ngFor="let user of users "
+            [value]="user.id"
+            (click)="onUserSelected(user.id)"
+             [class.active]="user.id===this.receiverId">
+
+                  {{user.firstName}}
+                  <i class="fas fa-comment" style="font-size: 18px;"></i>
+
+                  <button *ngIf="!allDeleting" (click)="deleteAllMessage(user.id)" class="btn btn-sm btn-sm btn-warning btn-delete-msg float-right" [disabled]="allDeleting">
+                    <span *ngIf="allDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!allDeleting"><i class="fas fa-trash" style="font-size: 12px;"></i></span>
+                </button>
+
+              </li>
+          </ul>
+        </div>
+        <div class="col-9">
+
+
+              <div class="row container d-flex justify-content-center"  *ngIf="messages!=undefined">
+                  <div class="col-md-12">
+                      <div class="card card-bordered card-info">
+                          <div class="card-header text-white bg-secondary">
+                              <h4 class="card-title"><strong><i class="fas fa-id-badge" style="font-size: 16px;"></i> {{receiverName}}</strong> </h4>
+                          </div>
+                          <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
+
+                            <div class="media media-chat" *ngFor="let msg of messages" [ngClass]="{ 'media-chat-reverse': this.senderId.toString()==msg.senderId }" >
+
+                              <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                              <div class="media-body">
+                                  <p>{{msg.body}} - {{msg.sentDate | amTimeAgo}}
+
+
+                                    <button *ngIf="this.senderId.toString()==msg.senderId" (click)="deleteMessage(msg.id)" class="btn btn-sm btn-sm btn-secondary btn-delete-msg" [disabled]="msg.isDeleting">
+                                      <span *ngIf="msg.isDeleting" class="spinner-border spinner-border-sm"></span>
+                                      <span *ngIf="!msg.isDeleting"><i class="fas fa-trash" style="font-size: 12px;"></i></span>
+                                  </button>
+                                  <button *ngIf="this.receiverId.toString()==msg.senderId" (click)="deleteReceivedMessage(msg.id)" class="btn btn-sm btn-sm btn-secondary btn-delete-msg" [disabled]="msg.isDeleting">
+                                    <span *ngIf="msg.isDeleting" class="spinner-border spinner-border-sm"></span>
+                                    <span *ngIf="!msg.isDeleting"><i class="fas fa-trash" style="font-size: 12px;"></i></span>
+                                </button>
+                                  </p>
+
+
+                              </div>
+                          </div>
+
+
+
+                              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                                  <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                              </div>
+                              <div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;">
+                                  <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div>
+                              </div>
+                          </div>
+                          <div class="publisher bt-1 border-light ">
+                            <div class="col-12">
+                              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                                <div class="form-group">
+
+
+                              <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
+                              <input class="publisher-input" formControlName="body"  type="text" placeholder="Write something" [ngClass]="{ 'is-invalid': submitted && f.body.errors }" >
+
+
+
+
+                                    <button [disabled]="loading" class="btn btn-success float-right">
+                                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                       <i class="fas fa-paper-plane" style="font-size: 24px;"></i>
+                                  </button>
+                                  <div *ngIf="submitted && f.body.errors" class="invalid-feedback">
+                                    <div *ngIf="f.body.errors.required">Message is required</div>
+                                </div>
+                                </div>
+
+
+                            </form>
+                            </div>
+
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+        </div>
+
+      </div>
+
+  </div>
+
